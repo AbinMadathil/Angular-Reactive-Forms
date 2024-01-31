@@ -1,0 +1,93 @@
+<!-- forms-sample.component.html -->
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <h2 class="form-heading">Registration Form</h2>
+
+    <!-- First Name -->
+    <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" formControlName="firstName">
+        <div *ngIf="myForm.get('firstName')?.hasError('required') && myForm.get('firstName')?.touched" class="error-message">
+            First Name is required.
+        </div>
+        <div *ngIf="myForm.get('firstName')?.hasError('maxlength') && myForm.get('firstName')?.touched" class="error-message">
+            Maximum length is 20 characters.
+        </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" formControlName="lastName">
+        <div *ngIf="myForm.get('lastName')?.hasError('required') && myForm.get('lastName')?.touched" class="error-message">
+            Last Name is required.
+        </div>
+        <div *ngIf="myForm.get('lastName')?.hasError('maxlength') && myForm.get('lastName')?.touched" class="error-message">
+            Maximum length is 20 characters.
+        </div>
+    </div>
+
+    <!-- Middle Name -->
+    <div class="form-group">
+        <label for="middleName">Middle Name:</label>
+        <input type="text" id="middleName" formControlName="middleName">
+        <!-- Add similar divs for validation messages as above -->
+    </div>
+
+    <!-- Age -->
+    <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="text" id="age" formControlName="age">
+        <div *ngIf="myForm.get('age')?.hasError('required') && myForm.get('age')?.touched" class="error-message">
+            Age is required.
+        </div>
+        <div *ngIf="(myForm.get('age')?.hasError('pattern') || myForm.get('age')?.hasError('min') || myForm.get('age')?.hasError('max')) && myForm.get('age')?.touched" class="error-message">
+            Age should be a number between 10 and 50.
+        </div>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group">
+        <label class="gender-label">Gender:</label>
+        <label><input type="radio" formControlName="gender" value="male" class="gender-input"> Male</label>
+        <label><input type="radio" formControlName="gender" value="female" class="gender-input"> Female</label>
+        <div *ngIf="myForm.get('gender')?.hasError('required') && myForm.get('gender')?.touched" class="error-message">
+            Please select a gender.
+        </div>
+    </div>
+
+     <!-- Address -->
+     <div formGroupName="address">
+        <label for="street">Street:</label>
+        <input type="text" id="street" formControlName="street">
+    
+        <label for="landmark">Landmark:</label>
+        <input type="text" id="landmark" formControlName="landmark">
+    
+        <label for="city">City:</label>
+        <input type="text" id="city" formControlName="city">
+    
+        <label for="state">State:</label>
+        <input type="text" id="state" formControlName="state">
+    
+        <label for="zipCode">Zip Code:</label>
+        <input type="text" id="zipCode" formControlName="zipCode">
+    
+        <label for="country">Country:</label>
+        <input type="text" id="country" formControlName="country">
+      </div>
+
+    <!-- Hobbies -->
+    <div formArrayName="hobbies" class="form-group">
+        <label for="hobbies">Hobbies:</label>
+        <div *ngFor="let hobby of hobbies.controls; let i = index">
+            <input type="text" [formControlName]="i">
+        </div>
+        <button type="button" (click)="addHobby()">Add Hobby</button>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit-button">
+        <button type="submit" [disabled]="myForm.invalid">Submit</button>
+    </div>
+</form>
